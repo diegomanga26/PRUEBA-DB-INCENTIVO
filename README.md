@@ -2,6 +2,12 @@
 
 Esta es una base de datos sencilla para mostrar la gestión de la información de una empresa llamada Campuslands donde contaremos con conexiones entre las distintas tablas, cada una con los requerimientos de la empresa, cumpliendo con cada uno de estos y haciendo algunas correciones que serán explicadas más adelante.
 
+## Datos del estudiante:
+
+- Nombre: Diego Alexander Manga Marulanda.
+
+- Curso: M3.
+
 ## Requisitos
 
 - MySQL: Asegúrate de tener instalado y configurado un servidor MySQL en tu entorno de desarrollo.
