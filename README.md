@@ -11,7 +11,7 @@ Esta es una base de datos sencilla para mostrar la gestión de la información d
 1. Clona este repositorio en tu máquina local:
 
 ```
-git clone ----- POR ACTUALIZAR -----
+git clone https://github.com/diegomanga26/PRUEBA-DB-INCENTIVO
 
 ```
 
