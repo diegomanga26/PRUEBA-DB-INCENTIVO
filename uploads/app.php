@@ -137,6 +137,56 @@
         echo json_encode($res);
     });
     
+    /**
+     * ! CRUD DE LA TABLA "campers":
+     */
+
+    $router->get("/campers", function(){
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("SELECT * FROM campers");
+        $res -> execute();
+        $res = $res->fetchAll(\PDO::FETCH_ASSOC);
+         // retorna la consulta como un array asociativo 
+        echo json_encode($res);
+    });
+
+    $router->put("/campers", function(){
+        $_DATA = json_decode(file_get_contents("php://input"), true);
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("UPDATE campers SET nombreCamper = :NOMBRE_CAMPER, apellidoCamper = :APELLIDO_CAMPER, fechaNac = :FECHANAC, idReg = :IDREG WHERE idCamper =:ID");
+        $res-> bindValue("NOMBRE_CAMPER", $_DATA['nombreCamper']);
+        $res-> bindValue("APELLIDO_CAMPER", $_DATA['apellidoCamper']);
+        $res-> bindValue("FECHANAC", $_DATA['fechaNac']);
+        $res-> bindValue("IDREG", $_DATA['idReg']);
+        $res-> bindValue("ID", $_DATA['idReg']);
+        $res -> execute();
+        $res = $res->rowCount();
+        echo json_encode($res);
+    });
+
+    $router -> delete("/campers", function(){
+        $_DATA = json_decode(file_get_contents("php://input"), true);
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("DELETE FROM campers WHERE idCamper =:ID");
+        $res->bindValue("ID", $_DATA["idCamper"]);
+        $res->execute();
+        $res = $res->rowCount();
+        echo json_encode($res);
+    });
+
+    $router->post("/campers", function(){
+        $_DATA = json_decode(file_get_contents("php://input"), true);
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("INSERT INTO campers (nombreCamper, apellidoCamper, fechaNac, idReg) VALUES (:NOMBRE_CAMPER, :APELLIDO_CAMPER, :FECHANAC, :IDREG)");
+        $res-> bindValue("NOMBRE_CAMPER", $_DATA['nombreCamper']);
+        $res-> bindValue("APELLIDO_CAMPER", $_DATA['apellidoCamper']);
+        $res-> bindValue("FECHANAC", $_DATA['fechaNac']);
+        $res-> bindValue("IDREG", $_DATA['idReg']);
+        $res -> execute();
+        $res = $res->rowCount();
+        echo json_encode($res);
+    });
+    
     $router->run();
     /*
         Preparar -> 
