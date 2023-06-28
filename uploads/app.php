@@ -91,7 +91,52 @@
         echo json_encode($res);
     });
     
+    /**
+     * ! CRUD DE LA TABLA "region":
+     */
 
+     $router->get("/reg", function(){
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("SELECT * FROM region");
+        $res -> execute();
+        $res = $res->fetchAll(\PDO::FETCH_ASSOC);
+         // retorna la consulta como un array asociativo 
+        echo json_encode($res);
+    });
+
+    $router->put("/reg", function(){
+        $_DATA = json_decode(file_get_contents("php://input"), true);
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("UPDATE region SET nombreReg = :NOMBRE_REG, idDep = :IDDEP WHERE idReg =:ID");
+        $res-> bindValue("NOMBRE_REG", $_DATA['nombreReg']);
+        $res-> bindValue("IDDEP", $_DATA['idDep']);
+        $res-> bindValue("ID", $_DATA['idReg']);
+        $res -> execute();
+        $res = $res->rowCount();
+        echo json_encode($res);
+    });
+
+    $router -> delete("/reg", function(){
+        $_DATA = json_decode(file_get_contents("php://input"), true);
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("DELETE FROM region WHERE idReg =:ID");
+        $res->bindValue("ID", $_DATA["idReg"]);
+        $res->execute();
+        $res = $res->rowCount();
+        echo json_encode($res);
+    });
+
+    $router->post("/reg", function(){
+        $_DATA = json_decode(file_get_contents("php://input"), true);
+        $cox = new \App\connect();
+        $res = $cox->con->prepare("INSERT INTO region (nombreReg, idDep) VALUES (:NOMBRE_REG, :IDDEP)");
+        $res-> bindValue("NOMBRE_REG", $_DATA['nombreReg']); 
+        $res-> bindValue("IDDEP", $_DATA['idDep']);
+        $res -> execute();
+        $res = $res->rowCount();
+        echo json_encode($res);
+    });
+    
     $router->run();
     /*
         Preparar -> 
